@@ -1,3 +1,13 @@
+@font-face {
+    font-family: BiotifBold;
+    src: url("assets/fonts/Biotif-Bold.ttf");
+}
+
+@font-face {
+    font-family: BiotifLight;
+    src: url("assets/fonts/Biotif-Light.ttf");
+}
+
 #map {
     height: 100vh;
 }
@@ -14,4 +24,62 @@ body {
     width: 120px;
     height: 120px;
     padding: 16px;
+}
+
+
+.commu-popup .leaflet-popup-content-wrapper {
+    border-radius: 2px;
+    display: flex;
+}
+
+.commu-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
+    margin: 8px;
+    display: flex;
+}
+
+.commu-popup-social-link {
+    text-decoration: none;
+}
+
+.ft-emails {
+    display: flex;
+    flex-direction: column;
+}
+
+.pop-in {
+    display: flex;
+    flex-direction: column;
+}
+
+.commu-popup-mail-contact {
+    display: flex;
+    text-decoration: none;
+    color: black;
+    align-items: center;
+}
+
+.commu-popup-mail-contact img {
+    margin-right: 8px;
+}
+
+.commu-popup .commu-popup-mail-contact a {
+    font-family: BiotifLight, serif;
+    text-decoration: none;
+    color: black;
+}
+
+.ft-name, .ft-name a{
+    font-family: BiotifBold, serif;
+    text-decoration: none;
+    font-size: 20px;
+    color: black !important;
+}
+
+.ft-name img {
+    width: 15px;
+    height: 15px;
+}
+
+.ft-name a:hover {
+    text-decoration: underline;
 }

@@ -1,10 +1,66 @@
-var mymap = L.map('map', { zoomControl: false }).setView([6.92, 115.06], 3);
+var mymap = L.map('map', {zoomControl: false}).setView([6.92, 115.06], 3);
+
 
 const addContactToMap = (contacts) => {
     contacts.forEach((ft) => {
         if (ft) {
-            console.log("Adding ", ft.name, ft.lat, ft.lon);
-            L.marker([ft.lat, ft.lon]).addTo(mymap).bindPopup(ft.name);
+            const socials = [];
+            for (let i = 1; i < 6; i++) {
+                socials.push({
+                    type: ft[`social_media_${i}_type`],
+                    url: ft[`social_media_${i}_link`],
+                })
+            }
+            const emails = [];
+            for (let i = 1; i < 6; i++) {
+                emails.push({
+                    name: ft[`contact_${i}_name`],
+                    mail: ft[`contact_${i}_email`],
+                })
+            }
+            L.marker([ft.lat, ft.lon]).addTo(mymap).bindPopup(`
+                <div class="pop-in">
+                    <div class="ft-name">
+                        ${ft.website ? `
+                            <span>
+                                <a target="_blank" href=${ft.website}>${ft.name}</a>
+                                <img src="assets/imgs/link.svg"/>
+                            </span>
+                        ` : ft.name}
+                    </div>
+                    <div className="ft-socials">
+                        ${socials
+                            .filter((_) => _.type !== null)
+                            .map((_) => `
+                                <a target="_blank" href=${_.url} class="commu-popup-social-link">
+                                    <img src="assets/imgs/${_.type}.svg"/>
+                                </a>`
+                            )
+                            .join("")
+                        }
+                    </div>
+                    <div class="ft-emails">
+                        ${emails
+                            .filter((_) => _.name !== null)
+                            .map((_) => `
+                                <div class="commu-popup-mail-contact">
+                                    <img src="assets/imgs/mail.svg"/>
+                                    <a href=mailto:${_.mail}>
+                                        ${_.name}
+                                    </a>
+                                </div>
+                                `
+                            )
+                            .join("")
+            }
+                    </div>
+                </div>
+            `, {
+                "className": "commu-popup",
+                "closeButton": false,
+                "minWidth" : 170,
+                "maxWidth": 170
+            });
         }
     });
 };
@@ -13,7 +69,7 @@ Papa.parse('./data/ft-contact.csv', {
     header: true,
     download: true,
     dynamicTyping: true,
-    complete: function(results) {
+    complete: function (results) {
         addContactToMap(results.data);
     }
 });
